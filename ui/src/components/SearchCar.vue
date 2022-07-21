@@ -95,31 +95,15 @@ export default {
       this.query = newVal;
     }
   },
-  created() {
-    this.fetchBrands();
-    this.fetchModels();
-
+  async created() {
+    const response = await fetch("http://127.0.0.1:5000/brands");
+    const data = await response.json();
+    this.brands = data;
+    const response2 = await fetch("http://127.0.0.1:5000/models");
+    const data2 = await response2.json();
+    this.models = data2;    
   },
   methods: {
-    fetchBrands() {
-      fetch("http://127.0.0.1:5000/brands")
-        .then(response => {
-          console.log(response.json());
-          this.brands = response.json();
-        })
-        .catch(error => {
-          console.error('Panic at the disco:', error);
-        })
-    },
-    fetchModels() {
-      fetch("http://127.0.0.1:5000/models")
-        .then(response => {
-          this.models = response.json();
-        })
-        .catch(error => {
-          console.error('Panic at the disco:', error);
-        })
-    },    
     brandClicked(e) {
       this.brandId = e.target.value;
     },
