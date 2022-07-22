@@ -147,8 +147,10 @@ export default {
       if (car == null) {
         this.addedCars.push({"brandId":this.brandId,"index":index});
       }
-      else
+      else {
         alert("this car is already added");
+        return;
+      }
       this.brandId = 0;
       this.modelId = null;
     },
