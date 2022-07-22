@@ -1,5 +1,6 @@
 import time
 import logging
+import psycopg2
 
 from flask import Blueprint, request, jsonify
 
@@ -9,71 +10,33 @@ logger = logging.getLogger(__name__)
 
 @controller.route('/brands', methods=['get'])
 def brands():
-    return jsonify([{
-          "id":"0",
-          "name":""
-        },
-        {
-          "id":"1",
-          "name":"audi"
-        },
-        {
-          "id":"2",
-          "name":"mercedes"
-        },
-        {
-          "id":"3",
-          "name":"bmw"
-        }])
 
+    conn = psycopg2.connect(database = "otogaleri", user = "postgres", password = "enes1324", host = "127.0.0.1", port = "5432")
+    cur = conn.cursor()
+    cur.execute('''select * from brand;''')
+    brands = cur.fetchall()
+    result = []
+    result.append({'id':'0','name':''})
+    for brand in brands:
+        result.append({'id':brand[0],'name':brand[1]})
+    conn.commit()
+    conn.close()
+
+    return jsonify(result)
 @controller.route('/models', methods=['get'])
 def models():
-    return jsonify([[],
-            [
-                {
-                    "id":"0",
-                    "name":"a3"
-                },
-                {
-                    "id":"1",
-                    "name":"a4"
+    conn = psycopg2.connect(database = "otogaleri", user = "postgres", password = "enes1324", host = "127.0.0.1", port = "5432")
+    cur = conn.cursor()
+    cur.execute('''select * from model;''')
+    models = cur.fetchall()
+    cur.execute('''select count(*) from brand;''')
+    totalBrands = cur.fetchall()[0][0]
+    result = []
+    for _ in range(totalBrands + 1):
+        result.append([])
+    for model in models:
+        result[int(model[2])].append({'id':model[0],'name':model[1]})
+    conn.commit()
+    conn.close()
 
-                },
-                {
-                    "id":"2",
-                    "name":"a5"
-                }
-            ],
-            [
-                {
-                    "id":"0",
-                    "name":"cla180"
-                },
-                {
-                    "id":"1",
-                    "name":"a180"
-
-                },
-                {
-                    "id":"2",
-                    "name":"g30"
-                }
-            ],
-
-            [
-                {
-                    "id":"0",
-                    "name":"i8"
-                },
-                {
-                    "id":"1",
-                    "name":"i3"
-
-                },
-                {
-                    "id":"2",
-                    "name":"320"
-                }
-            ],            
-            
-        ])
+    return jsonify(result)

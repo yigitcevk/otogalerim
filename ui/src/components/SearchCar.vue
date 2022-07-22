@@ -5,9 +5,6 @@
   <div class="container" style="text-align: center; align-items: center">
     <img
       src="@/assets/iconlarge.png"
-      v-bind:style="[
-        curQuery ? 'width:100px;height:100px;float:left;' : '',
-      ]"
     />
 
   <div class = 'brandCards'>
@@ -15,7 +12,7 @@
         <label for="brand">
           Select Brand
         </label>
-        <select :placeholder="[[ asd ]]" class='selectType' name="brand" @change="brandClicked($event)" >
+        <select class='selectType' name="brand" @change="brandClicked($event)" >
           <option v-for="item in brands" :key="item.id" :value="item.id">
               {{item.name}}
           </option>
@@ -43,10 +40,10 @@
 
   <div class="form">
     <div class='addedCars'>
-      <div v-for="item in addedCars" :key="item.modelId">
-          <a class='button-white' @click="removeCar(item)">
-            {{brands[item.brandId].name}} {{models[item.brandId][item.modelId].name}} 
-          </a>
+      <div v-for="item in addedCars" :key="item.index">
+        <a class='button-white' @click="removeCar(item)">
+          {{this.brands[item.brandId].name}} {{this.models[item.brandId][item.index].name}} 
+        </a>
       </div>
     </div>
   </div>
@@ -73,8 +70,10 @@
 
 </template>
 
-
 <script>
+
+import { isProxy, toRaw } from 'vue';
+
 export default {
   name: 'SearchCar',
   components: {
@@ -95,30 +94,66 @@ export default {
       this.query = newVal;
     }
   },
-  async created() {
-    const response = await fetch("http://127.0.0.1:5000/brands");
-    const data = await response.json();
-    this.brands = data;
-    const response2 = await fetch("http://127.0.0.1:5000/models");
-    const data2 = await response2.json();
-    this.models = data2;    
+  created() {
+
+    fetch("http://127.0.0.1:5000/brands")
+      .then(async response => {
+        const data = await response.json();
+
+        if (!response.ok) {
+          const error = (data && data.message) || response.statusText;
+          return Promise.reject(error);
+        }
+        this.brands = data;
+      })
+      .catch(error => {
+        this.errorMessage = error;
+        console.error("There was an error!", error);
+      });
+
+    fetch("http://127.0.0.1:5000/models")
+      .then(async response => {
+        const data = await response.json();
+
+        if (!response.ok) {
+          const error = (data && data.message) || response.statusText;
+          return Promise.reject(error);
+        }
+
+        this.models = data;
+      })
+      .catch(error => {
+        this.errorMessage = error;
+        console.error("There was an error!", error);
+      });
+
+ 
   },
   methods: {
     brandClicked(e) {
       this.brandId = e.target.value;
+      this.modelId = this.models[this.brandId][0].id;
     },
     modelClicked(e){
       this.modelId = e.target.value;
     },
     newCar() {
-      let car = this.addedCars.find(car => car.brandId === this.brandId && car.modelId === this.modelId)
-      if (car == null)   
-        this.addedCars.push({"brandId":this.brandId,"modelId":this.modelId})
+      let index = 0
+      for (let i = 0; i < this.models[this.brandId].length ; i++) {
+        if (this.models[this.brandId][i].id ===this.modelId)
+          index = i;
+      }
+      let car = this.addedCars.find(car => car.brandId === this.brandId && car.index === index)
+      if (car == null) {
+        this.addedCars.push({"brandId":this.brandId,"index":index});
+      }
       else
         alert("this car is already added");
+      this.brandId = 0;
+      this.modelId = null;
     },
     removeCar(item) {
-      this.addedCars = this.addedCars.filter(data => (data.modelId != item.modelId || data.brandId != item.brandId));
+      this.addedCars = this.addedCars.filter(data => (data.index != item.index || data.brandId != item.brandId));
     }
   }
 }
