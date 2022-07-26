@@ -32,6 +32,13 @@ export default {
           params: {
           }
       });     
+    },
+    navigateGallery() {
+      this.$router.push({
+          name: 'GalleryPage',
+          params: {
+          }
+      });     
     }
   }
 }

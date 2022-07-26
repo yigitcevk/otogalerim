@@ -146,7 +146,7 @@ body {
   padding: 16px;
   background: #f08921;
   padding-bottom: 20px;
-  border-bottom: 1px solid black;
+  border-bottom: 0px solid black;
 }
 
 .home-frame {
