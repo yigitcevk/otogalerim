@@ -195,10 +195,10 @@ export default {
   padding: 14px 24px;
   margin:8px;
   background: #ffffff;
-  color: #0d1821;
+  color: #1b449c;
   text-decoration: none;
   font-weight: bold;
-  border: 2px solid #0d1821;
+  border: 2px solid #1b449c;
   box-sizing: border-box;
   border-radius: 40px;  
 }
@@ -226,12 +226,12 @@ export default {
   padding: 8px 12px;
   margin-top:5px;
   margin-bottom:5px;
-  background: #0d1821;
+  background: #1b449c;
   color: #ffffff;
   width:50%;
   text-decoration: none;
   font-weight: bold;
-  border: 2px solid #0d1821;
+  border: 2px solid #1b449c;
   box-sizing: border-box;
   border-radius: 40px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);

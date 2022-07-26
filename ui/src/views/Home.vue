@@ -1,6 +1,18 @@
 <template>
-  <div style='heigth:100vh'>
-    <SearchCar/>
+  <div class='home-frame' style=''>
+    <img
+      src="@/assets/iconlarge.png"
+    />
+    <div>
+    <a class="button-add" v-on:click="navigateGallery()">
+        Galeri girişi
+    </a>
+    <a class="button-add" v-on:click="navigateUser()">
+        Kullanıcı girişi
+    </a>    
+    </div>  
+
+    <!-- <SearchCar/> -->
   </div>
 </template>
 
@@ -12,7 +24,22 @@ export default {
   name: 'Home',
   components: {
     SearchCar,
+  },
+  methods: {
+    navigateUser() {
+      this.$router.push({
+          name: 'UserPage',
+          params: {
+          }
+      });     
+    }
   }
 }
 
 </script>
+
+<style>
+
+
+
+</style>

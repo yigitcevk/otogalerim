@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style='height:100%'>
     <router-view />
   </div>
 </template>
@@ -10,11 +10,15 @@ export default {
 }
 </script>
 
-
 <style>
+
+.html{
+  height:100%;
+}
 
 body {
   font-family: "Public Sans";
+  background-color:#f08921;
 }
 
 .button-white {
@@ -111,7 +115,7 @@ body {
 }
 
 .search-bar {
-  background: blue;
+  background: #656569;
 }
 
 /*Eski CSS:*/
@@ -140,9 +144,16 @@ body {
 
 .top-frame {
   padding: 16px;
-  background: #dced31;
+  background: #f08921;
   padding-bottom: 20px;
   border-bottom: 1px solid black;
+}
+
+.home-frame {
+  padding: 16px;
+  background: #f08921;
+  text-align: center;
+  
 }
 
 .middle-frame {
@@ -165,7 +176,7 @@ body {
 
 .bottom-frame {
   padding:16px;
-  background: #0d1821;
+  background: #656569;
   padding-bottom: 20px;
   padding-left: 5%;
   padding-top: 5.5%;
