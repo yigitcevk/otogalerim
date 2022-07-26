@@ -23,6 +23,7 @@ def brands():
     conn.close()
 
     return jsonify(result)
+
 @controller.route('/models', methods=['get'])
 def models():
     conn = psycopg2.connect(database = "otogaleri", user = "postgres", password = "enes1324", host = "127.0.0.1", port = "5432")
@@ -40,3 +41,14 @@ def models():
     conn.close()
 
     return jsonify(result)
+
+@controller.route('/galleryCars/<string:galleryId>', methods=['get'])
+def galleryCars(galleryId):
+
+    conn = psycopg2.connect(database = "otogaleri", user = "postgres", password = "enes1324", host = "127.0.0.1", port = "5432")
+    cur = conn.cursor()
+    sql_select_query = """select c.car_id,brand_name,model_name,uretim_yili,renk,durumu,km,yakit,vites,motor_hacmi,motor_gucu,on_sale from own as o, car as c, brand as b, model as m where c.model_id = m.model_id and c.brand_id = b.brand_id and o.car_id = c.car_id and o.gallery_id = %s"""
+    cur.execute(sql_select_query, (galleryId,))
+    car_ids = cur.fetchall()
+
+    return jsonify(car_ids)
