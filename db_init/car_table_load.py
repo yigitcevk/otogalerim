@@ -56,7 +56,7 @@ for _ in range(1000):
     model_id = models[index][index2]['id']
     model_name = models[index][index2]['name']
 
-    km = randint(0,3000000)
+    km = randint(10000,300000)
     durum = durumL[randint(0,len(durumL) - 1)]
     if (durum == 'Sıfır'):
         km = 0
