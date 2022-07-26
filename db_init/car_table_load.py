@@ -23,6 +23,11 @@ for brand in brands:
 for model in models:
     print(model)
 
+cur.execute('''select gallery_id from Gallery''')
+gallery_ids = cur.fetchall()
+
+print(len(gallery_ids))
+
 cur.execute('''create table if not EXISTS CAR(
     car_id varchar(30) NOT NULL,
     model_id varchar(30) NOT NULL,
@@ -35,6 +40,7 @@ cur.execute('''create table if not EXISTS CAR(
     motor_hacmi real,
     uretim_yili integer,
     motor_gucu integer,
+    gallery_id varchar(30) NOT NULL,
     primary key(car_id),
     foreign key(model_id) references MODEL(model_id),
     foreign key(brand_id) references BRAND(brand_id)
@@ -62,7 +68,9 @@ for _ in range(1000):
     car_id = car_id + 1
     uretim_yili = randint(1980,2022)
 
-    cur.execute('''insert into car values (%s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s);''',(car_id,model_id,brand_id,renk,km,durum,yakit,vites,motor_hacmi,uretim_yili,motor_gucu))
+    gallery_id = gallery_ids[randint(0,len(gallery_ids) - 1)]
+
+    cur.execute('''insert into car values (%s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);''',(car_id,model_id,brand_id,renk,km,durum,yakit,vites,motor_hacmi,uretim_yili,motor_gucu,gallery_id))
     print(brand_name,model_name,motor_hacmi,motor_gucu,durum,km,yakit,vites)
 
 conn.commit()
