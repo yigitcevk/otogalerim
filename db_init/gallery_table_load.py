@@ -59,7 +59,7 @@ try:
         if(city_index == 1):
             city_name = 'İstanbul'
             district_name = district_arr2[randint(0,2)]
-        if(city_name == 2):
+        if(city_index == 2):
             city_name = 'İzmir'
             district_name = district_arr3[randint(0,2)]
 
