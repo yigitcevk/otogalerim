@@ -7,26 +7,20 @@
 
         <div class="container" style="text-align: center; align-items: center">
 
-            <div class = 'galleryEmailCards'>
+            <div class = 'galleryEmailCards' style="border-style: solid;">
                 <div>
-                    <label for="brand">
-                    Enter email
-                    </label>
-                    <input class="email-input" v-model="message" placeholder="Enter email" />
+                    <label for="enter-email" style="margin-top: 5px; margin-right: 5px;">Enter email</label>
+                    <input class="email-input" style="border-style: solid; margin-top: 5px;" v-model="message" placeholder="Enter email" />
                 </div>
 
-                <a class="button-add" v-on:click="newCar()">
+                <a class="button-add" v-on:click="login()">
                     Login 
                 </a>
 
             </div>  
 
-                <h1>
-                Save time for buying cars!
-                </h1>
-                <p>
-                We will search the autogaleries for your dream car.
-                </p>
+            <h1>Save time for buying cars!</h1>
+            <p>We will search the autogaleries for your dream car.</p>
         </div>
 
 
@@ -39,7 +33,7 @@
 import { isProxy, toRaw } from 'vue';
 
 export default {
-  name: 'SearchCar',
+  name: 'GalleryLogin',
   components: {
   },
   data() {
@@ -51,11 +45,6 @@ export default {
       addedCars:[],
       brands:null,
       models:null,      
-    }
-  },
-  watch: {
-    curQuery(newVal) {
-      this.query = newVal;
     }
   },
   created() {
@@ -94,33 +83,9 @@ export default {
  
   },
   methods: {
-    brandClicked(e) {
-      this.brandId = e.target.value;
-      this.modelId = this.models[this.brandId][0].id;
+    login() {
+      alert("OV YES")
     },
-    modelClicked(e){
-      this.modelId = e.target.value;
-    },
-    newCar() {
-      let index = 0
-      for (let i = 0; i < this.models[this.brandId].length ; i++) {
-        if (this.models[this.brandId][i].id ===this.modelId)
-          index = i;
-      }
-      let car = this.addedCars.find(car => car.brandId === this.brandId && car.index === index)
-      if (car == null) {
-        this.addedCars.push({"brandId":this.brandId,"index":index});
-      }
-      else {
-        alert("this car is already added");
-        return;
-      }
-      this.brandId = 0;
-      this.modelId = null;
-    },
-    removeCar(item) {
-      this.addedCars = this.addedCars.filter(data => (data.index != item.index || data.brandId != item.brandId));
-    }
   }
 }
 
@@ -130,7 +95,8 @@ export default {
 <style>
 
 .email-input {
-    width:160px
+    width:250px;
+    border-radius: 8px;
 }
 
 .otogalerimicon {
@@ -190,12 +156,6 @@ export default {
 
 }
 
-.selectType{
-
-  width:160px
-}
-
-
 .button-add:hover{
   box-shadow: 0px 0px 20px black;
   transition: box-shadow 0.2s ease-in-out;  
@@ -235,7 +195,7 @@ export default {
   /* Shadow / 1 */
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.05), 0px 25px 35px rgba(0, 0, 0, 0.03);
   border-radius: 8px;
-  width:20%;
+  width:40%;
 }
 
 
