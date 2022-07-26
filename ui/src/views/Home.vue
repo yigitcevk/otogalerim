@@ -4,12 +4,17 @@
       src="@/assets/iconlarge.png"
     />
     <div>
-    <a class="button-add" v-on:click="navigateGallery()">
-        Galeri girişi
-    </a>
-    <a class="button-add" v-on:click="navigateUser()">
-        Kullanıcı girişi
-    </a>    
+      <a class="button-add" v-on:click="navigateGallery()">
+          Galeri girişi
+      </a>
+      <a class="button-add" v-on:click="navigateUser()">
+          Kullanıcı girişi
+      </a>
+      <div class="lower-page-div">
+        <h1>Save time for buying cars!</h1>
+        <p>We will search the autogaleries for your dream car.</p>   
+      </div>
+    
     </div>  
 
     <!-- <SearchCar/> -->
@@ -47,6 +52,11 @@ export default {
 
 <style>
 
-
+.lower-page-div {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  padding-left: 38%;
+}
 
 </style>

@@ -55,14 +55,11 @@
 
   </div>  
 
-    <h1>
-      Save time for buying cars!
-    </h1>
-    <p>
-      We will search the autogaleries for your dream car.
-    </p>
   </div>
-
+  <div class="lower-page-div">
+        <h1>Save time for buying cars!</h1>
+        <p>We will search the autogaleries for your dream car.</p>   
+      </div>
 
 
 </div>
@@ -164,6 +161,13 @@ export default {
 
 
 <style>
+
+.lower-page-div {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  padding-left: 38%;
+}
 
 .form {
   display: flex;
