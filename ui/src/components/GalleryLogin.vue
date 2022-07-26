@@ -41,44 +41,17 @@ export default {
       email:""     
     }
   },
-  created() {
-
-    fetch("http://127.0.0.1:5000/brands")
-      .then(async response => {
-        const data = await response.json();
-
-        if (!response.ok) {
-          const error = (data && data.message) || response.statusText;
-          return Promise.reject(error);
-        }
-        this.brands = data;
-      })
-      .catch(error => {
-        this.errorMessage = error;
-        console.error("There was an error!", error);
-      });
-
-    fetch("http://127.0.0.1:5000/models")
-      .then(async response => {
-        const data = await response.json();
-
-        if (!response.ok) {
-          const error = (data && data.message) || response.statusText;
-          return Promise.reject(error);
-        }
-
-        this.models = data;
-      })
-      .catch(error => {
-        this.errorMessage = error;
-        console.error("There was an error!", error);
-      });
-
- 
+  created() { 
   },
   methods: {
     login() {
-      alert(this.email)
+      alert(this.email);
+      this.$router.push({
+          name: 'GalleryAdmin',
+          params: {
+            galleryId:this.email
+          }
+      });       
     },
   }
 }
