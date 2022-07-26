@@ -46,7 +46,7 @@ try:
     district_arr2 = ["Kadıköy", "Beşiktaş", "Etiler"]
     district_arr3 = ["Karşıyaka", "Güzelyalı", "Bostanlı"]
     for i in range(30):
-        gallery_id = randint(100000, 999999)
+        gallery_id = gallery_names[i]
         gallery_name = gallery_names[i]
         
         city_name = ""
