@@ -9,11 +9,11 @@
 
             <div class = 'galleryEmailCards' style="border-style: solid;">
                 <div>
-                    <label for="enter-email" style="margin-top: 5px; margin-right: 5px;">Enter email</label>
-                    <input class="email-input" style="border-style: solid; margin-top: 5px;" v-model="message" placeholder="Enter email" />
+                    <label for="enter-email" style="margin-top: 5px; margin-right: 5px;">Gallery ID</label>
+                    <input class="email-input" style="border-style: solid; margin-top: 5px;" v-model="email" v-on:keyup.enter="login"  placeholder="Enter Gallery ID" />
                 </div>
 
-                <a class="button-add" v-on:click="login()">
+                <a class="button-login" v-on:click="login()">
                     Login 
                 </a>
 
@@ -38,13 +38,7 @@ export default {
   },
   data() {
     return {
-      key:"",
-      query: "",
-      brandId:0,
-      modelId:null,
-      addedCars:[],
-      brands:null,
-      models:null,      
+      email:""     
     }
   },
   created() {
@@ -84,7 +78,7 @@ export default {
   },
   methods: {
     login() {
-      alert("OV YES")
+      alert(this.email)
     },
   }
 }
@@ -136,32 +130,18 @@ export default {
   transition: box-shadow 0.2s ease-in-out;
 }
 
-.button-added{
-  cursor: pointer;
-  float: right;
-  padding: 14px 24px;
-  margin:8px;
-  background: #ffffff;
-  color: #1b449c;
-  text-decoration: none;
-  font-weight: bold;
-  border: 2px solid #1b449c;
-  box-sizing: border-box;
-  border-radius: 40px;  
-}
-
 .addedCars{
   display:flex;
   flex-direction:row;
 
 }
 
-.button-add:hover{
+.button-login:hover{
   box-shadow: 0px 0px 20px black;
   transition: box-shadow 0.2s ease-in-out;  
 }
 
-.button-add {
+.button-login {
   cursor: pointer;
   float: right;
   padding: 8px 12px;
@@ -179,7 +159,7 @@ export default {
 }
 
 
-.button-add > .text {
+.button-login > .text {
   font-size: 8px;
   vertical-align: middle;
 }
