@@ -45,7 +45,6 @@ export default {
   },
   methods: {
     login() {
-      alert(this.email);
       this.$router.push({
           name: 'GalleryAdmin',
           params: {
