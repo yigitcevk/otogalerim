@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import UserPage from '../views/UserPage.vue'
 import GalleryPage from '../views/GalleryPage.vue'
 import GalleryAdmin from '../views/GalleryAdmin.vue'
+import ListCar from '../views/ListCar.vue'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/galleryadmin/:galleryId',
     name: 'GalleryAdmin',
     component: GalleryAdmin,    
+  },
+  {
+    path: '/usarpage/listcar',
+    name: 'ListCar',
+    component: ListCar,    
   }, 
 ]
 const router = createRouter({

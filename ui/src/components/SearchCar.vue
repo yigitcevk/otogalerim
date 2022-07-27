@@ -49,7 +49,7 @@
   </div>
 
   <div style='width:200px'>
-    <a class="button-add" v-on:click="search()">
+    <a class="button-add" v-on:click="navigateSearch()">
         Search
     </a>
 
@@ -69,8 +69,6 @@
 
 <script>
 
-import { isProxy, toRaw } from 'vue';
-
 export default {
   name: 'SearchCar',
   components: {
@@ -86,11 +84,7 @@ export default {
       models:null,      
     }
   },
-  watch: {
-    curQuery(newVal) {
-      this.query = newVal;
-    }
-  },
+
   created() {
 
     fetch("http://127.0.0.1:5000/brands")
@@ -153,6 +147,14 @@ export default {
     },
     removeCar(item) {
       this.addedCars = this.addedCars.filter(data => (data.index != item.index || data.brandId != item.brandId));
+    },
+    navigateSearch(){
+      this.$router.push({
+          name: 'ListCar',
+          params: {
+            addedCars:this.addedCars
+          }
+      });
     }
   }
 }

@@ -12,8 +12,10 @@
       </a>
       <div class="lower-page-div">
         <h1>Save time for buying cars!</h1>
-        <p>We will search the autogaleries for your dream car.</p>   
+        <p>We will search the autogaleries for your dream car.</p>
       </div>
+      <img class="tobb-etu-png" src="@/assets/tobbetu.png"/>   
+
     
     </div>  
 
@@ -57,6 +59,12 @@ export default {
   bottom: 0;
   text-align: center;
   padding-left: 38%;
+}
+.tobb-etu-png {
+  position: absolute;
+  bottom: 0;
+  width: 5%;
+  right: 0;
 }
 
 </style>
