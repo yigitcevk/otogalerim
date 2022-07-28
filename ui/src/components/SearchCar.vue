@@ -1,73 +1,76 @@
 <template>
-<div class="top-frame">
 
+  <div class="top-frame">
 
-  <div class="container" style="text-align: center; align-items: center">
-    <img
+    <div class="container" style="text-align: center; align-items: center">
+      <img 
       src="@/assets/iconlarge.png"
-    />
+      />
 
-  <div class = 'brandCards'>
-      <div>
-        <label for="brand">
-          Select Brand
-        </label>
-        <select class='selectType' name="brand" @change="brandClicked($event)" >
-          <option v-for="item in brands" :key="item.id" :value="item.id">
-              {{item.name}}
-          </option>
-        </select>
+      <div class = 'brandCards'>
+          <div>
+            <label for="brand">
+              Select Brand
+            </label>
+            <select class='selectType' name="brand" @change="brandClicked($event)" >
+              <option v-for="item in brands" :key="item.id" :value="item.id">
+                  {{item.name}}
+              </option>
+            </select>
+          </div>
+
+          <div>
+            <label for="brand">
+              Select Model
+            </label>
+          
+            <select v-if="models!=null" class = 'selectType' name="model" @change="modelClicked($event)">
+                <option v-for="item in models[brandId]" :key="item.id" :value="item.id">
+                    {{item.name}}
+                </option>
+            </select>
+          </div>
+
+          <a class="button-add" v-on:click="newCar()" method="post">
+              Add
+          </a>
+
       </div>
 
-      <div>
-        <label for="brand">
-          Select Model
-        </label>
-      
-        <select v-if="models!=null" class = 'selectType' name="model" @change="modelClicked($event)">
-            <option v-for="item in models[brandId]" :key="item.id" :value="item.id">
-                {{item.name}}
-            </option>
-        </select>
+
+      <div class="form">
+        <div class='addedCars'>
+          <div v-for="item in addedCars" :key="item.index">
+            <a class='button-white' @click="removeCar(item)">
+              {{this.brands[item.brandId].name}} {{this.models[item.brandId][item.index].name}} 
+            </a>
+          </div>
+        </div>
       </div>
 
-      <a class="button-add" v-on:click="newCar()">
-          Add
-      </a>
-
-  </div>
-
-
-  <div class="form">
-    <div class='addedCars'>
-      <div v-for="item in addedCars" :key="item.index">
-        <a class='button-white' @click="removeCar(item)">
-          {{this.brands[item.brandId].name}} {{this.models[item.brandId][item.index].name}} 
+      <div style='width:200px'>
+        <a class="button-add" v-on:click="navigateSearch()">
+            Search
         </a>
-      </div>
+
+      </div>  
+
     </div>
-  </div>
+    
+    <div class="lower-page-div">
+      <h1>Save time for buying cars!</h1>
+      <p>We will search the autogaleries for your dream car.</p>   
+    </div>
 
-  <div style='width:200px'>
-    <a class="button-add" v-on:click="navigateSearch()">
-        Search
-    </a>
-
-  </div>  
 
   </div>
-  <div class="lower-page-div">
-        <h1>Save time for buying cars!</h1>
-        <p>We will search the autogaleries for your dream car.</p>   
-      </div>
-
-
-</div>
 
 
 </template>
 
 <script>
+
+import axios from 'axios'
 
 export default {
   name: 'SearchCar',
@@ -76,12 +79,13 @@ export default {
   data() {
     return {
       key:"",
-      query: "",
       brandId:0,
       modelId:null,
       addedCars:[],
       brands:null,
-      models:null,      
+      models:null,
+      param:null,
+
     }
   },
 
@@ -117,7 +121,6 @@ export default {
         this.errorMessage = error;
         console.error("There was an error!", error);
       });
-
  
   },
   methods: {
@@ -129,14 +132,23 @@ export default {
       this.modelId = e.target.value;
     },
     newCar() {
-      let index = 0
+      
+      let index = 0;
       for (let i = 0; i < this.models[this.brandId].length ; i++) {
         if (this.models[this.brandId][i].id ===this.modelId)
           index = i;
       }
       let car = this.addedCars.find(car => car.brandId === this.brandId && car.index === index)
       if (car == null) {
-        this.addedCars.push({"brandId":this.brandId,"index":index});
+        this.addedCars.push({
+          "brandId":this.brandId,
+          "index":index
+          });
+
+      console.log(this.brands[this.brandId].name);
+      console.log(this.models[this.brandId][index].name);
+
+
       }
       else {
         alert("this car is already added");
@@ -144,15 +156,20 @@ export default {
       }
       this.brandId = 0;
       this.modelId = null;
+      console.log(this.addedCars);
+
     },
     removeCar(item) {
       this.addedCars = this.addedCars.filter(data => (data.index != item.index || data.brandId != item.brandId));
     },
     navigateSearch(){
+      console.log(this.addedCars);
+      this.param = JSON.stringify(this.addedCars);
+      console.log(this.param);
       this.$router.push({
           name: 'ListCar',
           params: {
-            addedCars:this.addedCars
+            addedCars:this.param,
           }
       });
     }
