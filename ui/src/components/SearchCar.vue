@@ -143,10 +143,6 @@ export default {
           "index":index
           });
 
-      console.log(this.brands[this.brandId].name);
-      console.log(this.models[this.brandId][index].name);
-
-
       }
       else {
         alert("this car is already added");
@@ -161,8 +157,10 @@ export default {
       this.addedCars = this.addedCars.filter(data => (data.index != item.index || data.brandId != item.brandId));
     },
     navigateSearch(){
-      console.log(this.addedCars);
-      this.param = JSON.stringify(this.addedCars);
+      let params = []
+      for (let i = 0; i < this.addedCars.length; i++)
+          params.push({'brandId':this.addedCars[i].brandId,'modelId':this.models[this.addedCars[i].brandId][this.addedCars[i].index].id});
+      this.param = JSON.stringify(params);
       console.log(this.param);
       this.$router.push({
           name: 'ListCar',

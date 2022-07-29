@@ -1,114 +1,115 @@
 <template>
-  <div class="top-frame">
-    <img 
-    class="otogalerimicon" src="@/assets/iconlarge.png"
-    />
-    
-    <div class ='container' >
+  <div>
+    <div class="top-frame">
+      <img 
+      class="otogalerimicon" src="@/assets/iconlarge.png"
+      />
+      
+      <div class ='container' >
 
-        <div class="first-search-form">
-            <h1>
-            Cars for your search:
-            </h1>
-            <div class='car_card' v-for="item in firstSearchCars" :key="item[0]">
-                {{item[1]}} {{item[2]}}
-            </div>
-        </div>
-
-
-        <div class="filter-form">
-          <h1>
-            Filter for more detailed search:
-          </h1>
-
-          <div class = 'brandCards'>
-
-            <div>
-              <label for="brand">
-                Select Color
-              </label>
-            
-              <select class = 'selectType' name="model" @change="colorClicked($event)">
-                  <option v-for="item in color" :key="item.id" :value="item.name">
-                      {{item.name}}
-                  </option>
-              </select>
-            </div>
-
-            <div>
-              <label for="brand">
-                Select State
-              </label>
-            
-              <select class = 'selectType' name="model" @change="stateClicked($event)">
-                  <option v-for="item in state" :key="item.id" :value="item.name">
-                      {{item.name}}
-                  </option>
-              </select>
-            </div>  
-
-            <div>
-              <label for="brand">
-                Select Fue
-              </label>
-            
-              <select class = 'selectType' name="model" @change="fueClicked($event)">
-                <option v-for="item in fue" :key="item.id" :value="item.name">
-                    {{item.name}}
-                </option>
-              </select>
-            </div> 
-
-            <div>
-              <label for="brand">
-                Select Vites
-              </label>
-            
-              <select class = 'selectType' name="model" @change="vitesClicked($event)">
-                  <option v-for="item in vites" :key="item.id" :value="item.name">
-                      {{item.name}}
-                  </option>
-              </select>
-            </div>       
-
-
-          <div>
-            <label for="brand">
-              Select Volume
-            </label>
-          
-            <select class = 'selectType' name="model" @change="hacimClicked($event)">
-                <option v-for="item in motor_hacmi" :key="item.id" :value="item.name">
-                    {{item.name}}
-                </option>
-            </select>
+          <div class="first-search-form">
+              <h1>
+              Cars for your search:
+              </h1>
+              <div class='car_card' v-for="item in firstSearchCars" :key="item[0]">
+                  {{item[1]}} {{item[2]}}
+              </div>
           </div>
 
-          <input class="email-input" style="border-style: solid; margin-top: 5px;" v-model="hp" placeholder="Enter HP range" />
-          <input class="email-input" style="border-style: solid; margin-top: 5px;" v-model="km" placeholder="Enter KM range" />
-          <input class="email-input" style="border-style: solid; margin-top: 5px;" v-model="uretim_yili" placeholder="Enter Production Year range" />
-          <a style='width:80px' class="button-login" v-on:click="enter()">
-              Enter 
-          </a>
+
+          <div class="filter-form">
+            <h1>
+              Filter for more detailed search:
+            </h1>
+
+            <div class = 'brandCards'>
+
+              <div>
+                <label for="brand">
+                  Select Color
+                </label>
+              
+                <select class = 'selectType' name="model" @change="colorClicked($event)">
+                    <option v-for="item in color" :key="item.id" :value="item.name">
+                        {{item.name}}
+                    </option>
+                </select>
+              </div>
+
+              <div>
+                <label for="brand">
+                  Select State
+                </label>
+              
+                <select class = 'selectType' name="model" @change="stateClicked($event)">
+                    <option v-for="item in state" :key="item.id" :value="item.name">
+                        {{item.name}}
+                    </option>
+                </select>
+              </div>  
+
+              <div>
+                <label for="brand">
+                  Select Fue
+                </label>
+              
+                <select class = 'selectType' name="model" @change="fueClicked($event)">
+                  <option v-for="item in fue" :key="item.id" :value="item.name">
+                      {{item.name}}
+                  </option>
+                </select>
+              </div> 
+
+              <div>
+                <label for="brand">
+                  Select Vites
+                </label>
+              
+                <select class = 'selectType' name="model" @change="vitesClicked($event)">
+                    <option v-for="item in vites" :key="item.id" :value="item.name">
+                        {{item.name}}
+                    </option>
+                </select>
+              </div>       
+
+
+            <div>
+              <label for="brand">
+                Select Volume
+              </label>
+            
+              <select class = 'selectType' name="model" @change="hacimClicked($event)">
+                  <option v-for="item in motor_hacmi" :key="item.id" :value="item.name">
+                      {{item.name}}
+                  </option>
+              </select>
+            </div>
+
+            <input class="email-input" style="border-style: solid; margin-top: 5px;" v-model="hp" placeholder="Enter HP range" />
+            <input class="email-input" style="border-style: solid; margin-top: 5px;" v-model="km" placeholder="Enter KM range" />
+            <input class="email-input" style="border-style: solid; margin-top: 5px;" v-model="uretim_yili" placeholder="Enter Production Year range" />
+            <a style='width:80px' class="button-login" v-on:click="enter()">
+                Enter 
+            </a>
+          </div>
+
         </div>
 
+        <div class="filter-search">
+          <h1>
+            Cars for more detailed search:
+          </h1>
+        </div>
+        
       </div>
 
-      <div class="filter-search">
-        <h1>
-          Cars for more detailed search:
-        </h1>
-      </div>
-      
     </div>
 
+    <div class="lower-page-div">
+      <h1>Save time for buying cars!</h1>
+      <p>We will search the autogaleries for your dream car.</p>   
+    </div>
   </div>
-
-  <div class="lower-page-div">
-    <h1>Save time for buying cars!</h1>
-    <p>We will search the autogaleries for your dream car.</p>   
-  </div>
-
 
 </template>
 

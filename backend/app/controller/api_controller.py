@@ -158,4 +158,21 @@ def enterCar():
     conn.commit()
 
     return jsonify({"message":"basariyla silindi"})    
-      
+
+@controller.route('/listCar', methods=['post'])
+def listCar():
+    print(request.json)
+    if request.json is not None:
+        print(request.json)
+    else:
+        return 'gallery_id, car_id and price must be defined', 400
+
+    conn = psycopg2.connect(database = "otogaleri", user = "postgres", password = "enes1324", host = "127.0.0.1", port = "5432")
+    cur = conn.cursor()
+
+    sql_select_query = """select c.car_id,brand_name,model_name,uretim_yili,renk,durumu,km,yakit,vites,motor_hacmi,motor_gucu,price from for_sale as o, car as c, brand as b, model as m where c.model_id = m.model_id and c.brand_id = b.brand_id and o.car_id = c.car_id and o.gallery_id = %s"""
+    cur.execute(sql_select_query, (car_id,model_id,brand_id,color,km,state,fue,vites,motor_hacmi,uretim_yili,motor_gucu,galleryId,))    
+
+    conn.commit()
+
+    return jsonify({"message":"basariyla silindi"})          
