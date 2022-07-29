@@ -9,11 +9,11 @@ from flask import Blueprint, request, jsonify
 controller = Blueprint('api_controller', __name__, url_prefix='') # template_folders?
 logger = logging.getLogger(__name__)
 
+from . import conn
+
 
 @controller.route('/brands', methods=['get'])
 def brands():
-
-    conn = psycopg2.connect(database = "otogaleri", user = "postgres", password = "enes1324", host = "127.0.0.1", port = "5432")
     cur = conn.cursor()
     cur.execute('''select * from brand;''')
     brands = cur.fetchall()
@@ -22,13 +22,11 @@ def brands():
     for brand in brands:
         result.append({'id':brand[0],'name':brand[1]})
     conn.commit()
-    conn.close()
 
     return jsonify(result)
 
 @controller.route('/models', methods=['get'])
 def models():
-    conn = psycopg2.connect(database = "otogaleri", user = "postgres", password = "enes1324", host = "127.0.0.1", port = "5432")
     cur = conn.cursor()
     cur.execute('''select * from model;''')
     models = cur.fetchall()
@@ -40,14 +38,12 @@ def models():
     for model in models:
         result[int(model[2])].append({'id':model[0],'name':model[1]})
     conn.commit()
-    conn.close()
 
     return jsonify(result)
 
 @controller.route('/galleryForSale/<string:galleryId>', methods=['get'])
 def galleryForSale(galleryId):
     print(galleryId)
-    conn = psycopg2.connect(database = "otogaleri", user = "postgres", password = "enes1324", host = "127.0.0.1", port = "5432")
     cur = conn.cursor()
     sql_select_query = """select c.car_id,brand_name,model_name,uretim_yili,renk,durumu,km,yakit,vites,motor_hacmi,motor_gucu,price from for_sale as o, car as c, brand as b, model as m where c.model_id = m.model_id and c.brand_id = b.brand_id and o.car_id = c.car_id and o.gallery_id = %s"""
     cur.execute(sql_select_query, (galleryId,))
@@ -56,7 +52,6 @@ def galleryForSale(galleryId):
 
 @controller.route('/galleryNoSaleCars/<string:galleryId>', methods=['get'])
 def galleryNoSaleCars(galleryId):
-    conn = psycopg2.connect(database = "otogaleri", user = "postgres", password = "enes1324", host = "127.0.0.1", port = "5432")
     cur = conn.cursor()
     sql_select_query = """select c.car_id,brand_name,model_name,uretim_yili,renk,durumu,km,yakit,vites,motor_hacmi,motor_gucu from own as o, car as c, brand as b, model as m where o.on_sale = false and c.model_id = m.model_id and c.brand_id = b.brand_id and o.car_id = c.car_id and o.gallery_id = %s"""
     cur.execute(sql_select_query, (galleryId,))
@@ -72,7 +67,6 @@ def removeCarFromSale():
 
     print(carId)
 
-    conn = psycopg2.connect(database = "otogaleri", user = "postgres", password = "enes1324", host = "127.0.0.1", port = "5432")
     cur = conn.cursor()
 
     try:
@@ -100,7 +94,6 @@ def placeCar():
 
     print(carId)
 
-    conn = psycopg2.connect(database = "otogaleri", user = "postgres", password = "enes1324", host = "127.0.0.1", port = "5432")
     cur = conn.cursor()
 
     try:
@@ -140,7 +133,6 @@ def enterCar():
     else:
         return 'gallery_id, car_id and price must be defined', 400
 
-    conn = psycopg2.connect(database = "otogaleri", user = "postgres", password = "enes1324", host = "127.0.0.1", port = "5432")
     cur = conn.cursor()
 
     # try:
@@ -159,20 +151,19 @@ def enterCar():
 
     return jsonify({"message":"basariyla silindi"})    
 
-@controller.route('/listCar', methods=['post'])
-def listCar():
-    print(request.json)
-    if request.json is not None:
-        print(request.json)
-    else:
-        return 'gallery_id, car_id and price must be defined', 400
+# @controller.route('/listCar', methods=['post'])
+# def listCar():
+#     print(request.json)
+#     if request.json is not None:
+#         print(request.json)
+#     else:
+#         return 'gallery_id, car_id and price must be defined', 400
 
-    conn = psycopg2.connect(database = "otogaleri", user = "postgres", password = "enes1324", host = "127.0.0.1", port = "5432")
-    cur = conn.cursor()
+#     cur = conn.cursor()
 
-    sql_select_query = """select c.car_id,brand_name,model_name,uretim_yili,renk,durumu,km,yakit,vites,motor_hacmi,motor_gucu,price from for_sale as o, car as c, brand as b, model as m where c.model_id = m.model_id and c.brand_id = b.brand_id and o.car_id = c.car_id and o.gallery_id = %s"""
-    cur.execute(sql_select_query, (car_id,model_id,brand_id,color,km,state,fue,vites,motor_hacmi,uretim_yili,motor_gucu,galleryId,))    
+#     sql_select_query = """select c.car_id,brand_name,model_name,uretim_yili,renk,durumu,km,yakit,vites,motor_hacmi,motor_gucu,price from for_sale as o, car as c, brand as b, model as m where c.model_id = m.model_id and c.brand_id = b.brand_id and o.car_id = c.car_id and o.gallery_id = %s"""
+#     cur.execute(sql_select_query, (car_id,model_id,brand_id,color,km,state,fue,vites,motor_hacmi,uretim_yili,motor_gucu,galleryId,))    
 
-    conn.commit()
+#     conn.commit()
 
-    return jsonify({"message":"basariyla silindi"})          
+#     return jsonify({"message":"basariyla silindi"})          
