@@ -18,6 +18,43 @@
             <h1>
                 Model : {{car[0][2]}}
             </h1>
+
+            <h1>
+                Üretim Yılı : {{car[0][3]}}
+            </h1>
+
+            <h1>
+                Renk : {{car[0][4]}}
+            </h1>
+
+            <h1>
+                Durum : {{car[0][5]}}
+            </h1>
+
+            <h1>
+                Km : {{car[0][6]}}
+            </h1>
+
+            <h1>
+                Yakıt : {{car[0][7]}}
+            </h1>
+
+            <h1>
+                Vites : {{car[0][8]}}
+            </h1>
+
+            <h1>
+                Motor Hacmi : {{car[0][9]}}
+            </h1>
+
+            <h1>
+                Motor Gücü : {{car[0][10]}}
+            </h1>
+
+            <h1>
+                Fiyat : {{car[0][11]}}
+            </h1>
+
             <h1>Save time for buying cars!</h1>
             <p>We will search the autogaleries for your dream car.</p>
         </div> 
