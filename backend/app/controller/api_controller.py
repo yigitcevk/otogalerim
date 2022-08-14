@@ -198,7 +198,7 @@ def listCar():
 @controller.route('/viewCar/<string:carId>', methods=['get'])
 def viewCar(carId):
     cur = conn.cursor()
-    select_query = '''select c.car_id,brand_name,model_name,uretim_yili,renk,durumu,km,yakit,vites,motor_hacmi,motor_gucu,price from for_sale as f,car as c,brand as b,model as m where f.car_id = c.car_id and c.car_id = %s and c.brand_id = b.brand_id and m.model_id = c.model_id;'''
+    select_query = '''select c.car_id, brand_name,model_name,uretim_yili,renk,durumu,km,yakit,vites,motor_hacmi,motor_gucu,price from for_sale as f,car as c,brand as b,model as m where f.car_id = c.car_id and c.car_id = %s and c.brand_id = b.brand_id and m.model_id = c.model_id;'''
     cur.execute(select_query,(carId,))
     result = cur.fetchall()
     print(result)

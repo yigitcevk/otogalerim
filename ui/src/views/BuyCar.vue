@@ -11,49 +11,59 @@
                 Features
             </h1>
 
-            <h1>
+            <h4>
                 Brand : {{car[0][1]}}
-            </h1>
+            </h4>
 
-            <h1>
+            <h4>
                 Model : {{car[0][2]}}
-            </h1>
+            </h4>
 
-            <h1>
+            <h4>
                 Üretim Yılı : {{car[0][3]}}
-            </h1>
+            </h4>
 
-            <h1>
+            <h4>
                 Renk : {{car[0][4]}}
-            </h1>
+            </h4>
 
-            <h1>
+            <h4>
                 Durum : {{car[0][5]}}
-            </h1>
+            </h4>
 
-            <h1>
+            <h4>
                 Km : {{car[0][6]}}
-            </h1>
+            </h4>
 
-            <h1>
+            <h4>
                 Yakıt : {{car[0][7]}}
-            </h1>
+            </h4>
 
-            <h1>
+            <h4>
                 Vites : {{car[0][8]}}
-            </h1>
+            </h4>
 
-            <h1>
+            <h4>
                 Motor Hacmi : {{car[0][9]}}
-            </h1>
+            </h4>
 
-            <h1>
+            <h4>
                 Motor Gücü : {{car[0][10]}}
-            </h1>
+            </h4>
 
-            <h1>
+            <h4>
                 Fiyat : {{car[0][11]}}
-            </h1>
+            </h4>
+
+            <label for="brand">
+                Select Rating for this sale
+            </label>
+        
+            <select class = 'selectType' name="model" @change="pointClicked($event)">
+                <option v-for="item in point" :key="item.id" :value="item.name">
+                    {{item.name}}
+                </option>
+            </select>            
 
             <h1>Save time for buying cars!</h1>
             <p>We will search the autogaleries for your dream car.</p>
@@ -76,6 +86,8 @@ export default {
     return {
         car:null,
         car_id:null,
+        currentPoint:'1',
+        point : [{'id':'1','name':'1'}, {'id':'2','name':'2'}, {'id':'3','name':'3'}, {'id':'4','name':'4'},{'id':'5','name':'5'}]
     }
   },
   created() { 
@@ -96,6 +108,9 @@ export default {
     });  
   },
   methods: {
+    pointClicked(e){
+        this.currentPoint = e.target.value;
+    },          
   }
 }
 
