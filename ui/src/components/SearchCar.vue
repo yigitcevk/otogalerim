@@ -48,15 +48,13 @@
         </div>
       </div>
 
-      <div style='width:200px'>
-        <a class="button-add" v-on:click="navigateSearch()">
-            Search
-        </a>
 
-      </div>  
+    <a class="button-add" v-on:click="navigateSearch()">
+        Search
+    </a>
 
     </div>
-    
+
     <div class="lower-page-div">
       <h1>Save time for buying cars!</h1>
       <p>We will search the autogaleries for your dream car.</p>   

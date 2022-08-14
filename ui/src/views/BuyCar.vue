@@ -7,65 +7,34 @@
 
         <div class="container" style="text-align: center; align-items: center">
             
-            <h1>
-                Features
-            </h1>
+            <div class = 'brandCards'>
+                <div>
+                    <h4>
+                        {{car[0][1]}} {{car[0][2]}} {{car[0][3]}} {{car[0][4]}} Renk 
+                    </h4>
+                </div>
 
-            <h4>
-                Brand : {{car[0][1]}}
-            </h4>
+                <h4>
+                    Durum : {{car[0][5]}} Km : {{car[0][6]}} <br> Yakıt : {{car[0][7]}} Vites : {{car[0][8]}} <br> 
+                    Motor Hacmi : {{car[0][9]}} Motor Gücü : {{car[0][10]}} <br> Fiyat : {{car[0][11]}}
+                </h4>                
+                <label for="brand">
+                    Select Rating for this sale
+                </label>
+            
+                <select class = 'selectType' name="model" @change="pointClicked($event)">
+                    <option v-for="item in point" :key="item.id" :value="item.name">
+                        {{item.name}}
+                    </option>
+                </select>  
 
-            <h4>
-                Model : {{car[0][2]}}
-            </h4>
+                <a class="button-add" v-on:click="buy()">
+                    Buy
+                </a>
 
-            <h4>
-                Üretim Yılı : {{car[0][3]}}
-            </h4>
+            </div>
 
-            <h4>
-                Renk : {{car[0][4]}}
-            </h4>
-
-            <h4>
-                Durum : {{car[0][5]}}
-            </h4>
-
-            <h4>
-                Km : {{car[0][6]}}
-            </h4>
-
-            <h4>
-                Yakıt : {{car[0][7]}}
-            </h4>
-
-            <h4>
-                Vites : {{car[0][8]}}
-            </h4>
-
-            <h4>
-                Motor Hacmi : {{car[0][9]}}
-            </h4>
-
-            <h4>
-                Motor Gücü : {{car[0][10]}}
-            </h4>
-
-            <h4>
-                Fiyat : {{car[0][11]}}
-            </h4>
-
-            <label for="brand">
-                Select Rating for this sale
-            </label>
-        
-            <select class = 'selectType' name="model" @change="pointClicked($event)">
-                <option v-for="item in point" :key="item.id" :value="item.name">
-                    {{item.name}}
-                </option>
-            </select>            
-
-            <h1>Save time for buying cars!</h1>
+            <h1>Save time for buying!</h1>
             <p>We will search the autogaleries for your dream car.</p>
         </div> 
 
@@ -110,7 +79,32 @@ export default {
   methods: {
     pointClicked(e){
         this.currentPoint = e.target.value;
-    },          
+    },
+    buy() {
+        let data =JSON.stringify({"car_id":this.car_id,"rating":this.currentPoint});    
+        const url = 'http://127.0.0.1:5000/buy'; 
+        fetch(url, {
+            method: 'post',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: data
+        }).then(function(response){
+            console.log(response)
+        }).then(function(text){
+            console.log(text);
+        }).catch(function (error){
+            console.error(error);
+        });
+
+        this.$router.push({
+            name: 'UserPage',
+            params: {
+            }
+        });
+
+ 
+    }         
   }
 }
 
