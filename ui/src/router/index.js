@@ -4,6 +4,7 @@ import UserPage from '../views/UserPage.vue'
 import GalleryPage from '../views/GalleryPage.vue'
 import GalleryAdmin from '../views/GalleryAdmin.vue'
 import ListCar from '../views/ListCar.vue'
+import BuyCar from '../views/BuyCar.vue'
 
 const routes = [
   {
@@ -30,7 +31,17 @@ const routes = [
     path: '/usarpage/listcar',
     name: 'ListCar',
     component: ListCar,    
-  }, 
+  },
+  {
+    path: '/usarpage/listcar',
+    name: 'ListCar',
+    component: ListCar,    
+  },
+  {
+    path: '/usarpage/buycar',
+    name: 'BuyCar',
+    component: BuyCar,    
+  },  
 ]
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

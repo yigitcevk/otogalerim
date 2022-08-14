@@ -11,8 +11,15 @@
               <h1>
               Cars for your search:
               </h1>
-              <div class='car_card' v-for="item in firstSearchCars" :key="item[0]">
-                  {{item[1]}} {{item[2]}}
+              <div class ='myCars' >
+                  <div>
+                      <div class='car_card' v-for="item in forSaleCars" :key="item[0]">
+                          {{item[1]}} {{item[2]}} {{item[3]}} {{item[4]}} {{item[5]}} {{item[6]}} {{item[7]}} {{item[8]}} {{item[9]}} {{item[10]}} {{item[11]}}
+                          <button class='rmv_sale_button' @click="buyCar(item[0])">
+                              Buy This Car!
+                          </button>
+                      </div>
+                  </div>
               </div>
           </div>
 
@@ -129,8 +136,7 @@ export default {
       brands:null,
       models:null,
 
-      firstSearchCars:[
-      ],
+      forSaleCars:null,
 
       currentColor:'Siyah',
       currentState:'2.el',
@@ -180,15 +186,19 @@ export default {
         console.error("There was an error!", error);
       });
 
-      const url = 'http://127.0.0.1:5000/listCar/';
+      const url = 'http://127.0.0.1:5000/listCar'; 
+      
+      let carData = JSON.stringify(this.listCars);
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: carData
+      };
 
-      fetch(url, {
-                method: 'post',
-                headers: {
-                    'Content-Type' : 'application/json'
-                },
-                body: this.listCars
-            })
+      alert(carData);
+
+
+    fetch(url,requestOptions)
       .then(async response => {
         const data = await response.json();
 
@@ -196,15 +206,23 @@ export default {
           const error = (data && data.message) || response.statusText;
           return Promise.reject(error);
         }
-
-        this.firstSearchCars = data;
+        this.forSaleCars = data;
       })
       .catch(error => {
         this.errorMessage = error;
         console.error("There was an error!", error);
       });
+
   },
   methods: {
+    buyCar(car_id){
+      this.$router.push({
+          name: 'BuyCar',
+          params: {
+            car_id:car_id
+          }
+      });  
+    },
     colorClicked(e){
             this.currentColor = e.target.value;
     },

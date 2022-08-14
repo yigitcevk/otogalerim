@@ -1,3 +1,4 @@
+from email.mime import base
 from random import randint
 import time
 import logging
@@ -10,7 +11,6 @@ controller = Blueprint('api_controller', __name__, url_prefix='') # template_fol
 logger = logging.getLogger(__name__)
 
 from . import conn
-
 
 @controller.route('/brands', methods=['get'])
 def brands():
@@ -40,6 +40,14 @@ def models():
     conn.commit()
 
     return jsonify(result)
+
+@controller.route('/profile/<string:galleryId>', methods=['get'])
+def profile(galleryId):
+    cur = conn.cursor()
+    sql_select_query = """SELECT gallery_name,total_sales,gallery_rating from gallery where gallery_id = %s"""
+    cur.execute(sql_select_query,(galleryId,))
+    profile = cur.fetchall()
+    return jsonify(profile)
 
 @controller.route('/galleryForSale/<string:galleryId>', methods=['get'])
 def galleryForSale(galleryId):
@@ -151,19 +159,47 @@ def enterCar():
 
     return jsonify({"message":"basariyla silindi"})    
 
-# @controller.route('/listCar', methods=['post'])
-# def listCar():
-#     print(request.json)
-#     if request.json is not None:
-#         print(request.json)
-#     else:
-#         return 'gallery_id, car_id and price must be defined', 400
+@controller.route('/listCar', methods=['post'])
+def listCar():
+    brands = []
+    models = []
+    if request.json is not None:
+        print(request.json)
+        try:
+            for element in request.json:
+                brands.append(element['brandId'])
+                models.append(element['modelId'])
+        except:
+            print('hahahaha')
+            return 'brand_id and model_id must be defined', 400
+    else:
+        return 'brand_id and model_id must be defined', 400
 
-#     cur = conn.cursor()
 
-#     sql_select_query = """select c.car_id,brand_name,model_name,uretim_yili,renk,durumu,km,yakit,vites,motor_hacmi,motor_gucu,price from for_sale as o, car as c, brand as b, model as m where c.model_id = m.model_id and c.brand_id = b.brand_id and o.car_id = c.car_id and o.gallery_id = %s"""
-#     cur.execute(sql_select_query, (car_id,model_id,brand_id,color,km,state,fue,vites,motor_hacmi,uretim_yili,motor_gucu,galleryId,))    
+    cur = conn.cursor()
 
-#     conn.commit()
 
-#     return jsonify({"message":"basariyla silindi"})          
+    base_query = """select c.car_id,brand_name,model_name,uretim_yili,renk,durumu,km,yakit,vites,motor_hacmi,motor_gucu,price from for_sale as f, car as c, brand,model where f.car_id = c.car_id and brand.brand_id = c.brand_id and c.model_id = model.model_id and ("""
+
+    variables = []
+    for i in range(len(brands)):
+        if (i != 0):
+            base_query = base_query + """ or """
+        base_query = base_query + """(c.brand_id = %s and c.model_id = %s)"""
+        variables.append(brands[i])
+        variables.append(models[i])
+    
+    base_query = base_query + """);"""
+    print(base_query)
+    cur.execute(base_query,tuple(variables))
+    cars_sales = cur.fetchall()
+    return jsonify(cars_sales)          
+
+@controller.route('/viewCar/<string:carId>', methods=['get'])
+def viewCar(carId):
+    cur = conn.cursor()
+    select_query = '''select c.car_id,brand_name,model_name,uretim_yili,renk,durumu,km,yakit,vites,motor_hacmi,motor_gucu,price from for_sale as f,car as c,brand as b,model as m where f.car_id = c.car_id and c.car_id = %s and c.brand_id = b.brand_id and m.model_id = c.model_id;'''
+    cur.execute(select_query,(carId,))
+    result = cur.fetchall()
+    print(result)
+    return jsonify(result)

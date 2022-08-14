@@ -1,8 +1,23 @@
 <template>
   <div style='heigth:100vh'>
+    <div style="myCars">
+        <h1>
+            Profile:
+        </h1>
+        <p>
+            Name : {{galleryName}}
+        </p>
+        <p>
+            Total Sales : {{totalSales}}
+        </p>
+        <p>
+            Gallery Rating : {{galleryRating}}
+        </p>
+
+    </div>
     <h1>
         Your cars on sale:
-    </h1>    
+    </h1>
     <div class ='myCars' >
         <div>
             <div class='car_card' v-for="item in forSaleCars" :key="item[0]">
@@ -144,6 +159,9 @@ export default {
     data(){
         return{
             brandId:0,
+            galleryName:null,
+            galleryRating:0,
+            totalSales:0,
             modelId:null,            
             galleryId:'',
             forSaleCars:[],
@@ -190,6 +208,7 @@ export default {
         });
 
         const url2 = 'http://127.0.0.1:5000/galleryNoSaleCars/' + this.galleryId;        
+        const url3 = 'http://127.0.0.1:5000/profile/' + this.galleryId;        
 
         fetch(url2)
         .then(async response => {
@@ -205,6 +224,22 @@ export default {
             this.errorMessage = error;
             console.error("There was an error!", error);
         });
+
+        fetch(url3)
+        .then(async response => {
+            const data = await response.json();
+            if (!response.ok) {
+            const error = (data && data.message) || response.statusText;
+            return Promise.reject(error);
+            }
+            this.galleryName = data[0][0];
+            this.totalSales = data[0][1];
+            this.galleryRating = data[0][2];
+        })
+        .catch(error => {
+            this.errorMessage = error;
+            console.error("There was an error!", error);
+        });        
 
         fetch("http://127.0.0.1:5000/brands")
         .then(async response => {
@@ -284,6 +319,10 @@ export default {
             this.currentMotorHacmi = e.target.value;
         },
         place() {            
+            if (this.price==null) {
+                alert('You should enter price!');
+                return;
+            }
             let data =JSON.stringify({"car_id":this.currentCar,"gallery_id":this.galleryId,"price":this.price});    
             const url = 'http://127.0.0.1:5000/placeCar'; 
 

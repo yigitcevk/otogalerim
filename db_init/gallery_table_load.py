@@ -64,9 +64,9 @@ try:
             district_name = district_arr3[randint(0,2)]
 
         email = gallery_name + "@gmail.com"
-        gallery_rating = 5
+        gallery_rating = 0
         telephone_number = "+90" + str(randint(500, 599)) + str(randint(0000000, 9999999))
-        total_sales = 30       
+        total_sales = 0       
         
         cur.execute('''INSERT INTO gallery VALUES (%s, %s, %s, %s, %s, %s, %s, %s);''',
                     (gallery_id, gallery_name, city_name, email, district_name, gallery_rating, telephone_number, total_sales))
